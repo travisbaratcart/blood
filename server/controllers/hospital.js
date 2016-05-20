@@ -63,27 +63,27 @@ let updateCurrentHospital = (req, res) => {
   .then((hospital) => {
     hospital.update(req.body)
     .then(() => {
-      req.body.schedules.forEach((schedule) => {
-        Schedule.findOne({where: {hospitalId: req.user.id}})
-        .then(sch => {
-          if(sch) {
-            Schedule.update({
-              day: schedule.day,
-              openhours: schedule.openhours,
-              closehours: schedule.closehours
-            } ,{where: {day: schedule.day}});
-
-          } else {
-            Schedule.create({
-              hospitalId: req.user.id,
-              day: schedule.day,
-              openhours: schedule.openhours,
-              closehours: schedule.closehours
-            });
-          }
+      if(req.body.schedules){
+        req.body.schedules.forEach((schedule) => {
+          Schedule.findOne({where: {hospitalId: req.user.id}})
+          .then(sch => {
+            if(sch) {
+              Schedule.update({
+                day: schedule.day,
+                openhours: schedule.openhours,
+                closehours: schedule.closehours
+              } ,{where: {day: schedule.day}});
+            } else {
+              Schedule.create({
+                hospitalId: req.user.id,
+                day: schedule.day,
+                openhours: schedule.openhours,
+                closehours: schedule.closehours
+              });
+            }
+          });
         });
-
-      });
+      }
     })
     .then(() => res.send(hospital));
   });

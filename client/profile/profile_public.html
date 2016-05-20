@@ -1,95 +1,83 @@
- <div class="container">
-  <div class="col-lg-10 col-lg-offset-1 toppad" >
-    <div class="col-md-8">
-      <div class="panel-body">
-        <div class="col-md-3">
-          <img ng-src="{{ProfileCtrl.user.photo}}" class="img-circle center-block img-profile"/>
-        </div>
-        <div class="col-md-3 userInfo-table">
-          <div class="table-user-information">
-            <div>
-              <span class="profile-info-labels">Name:</span>
-              <span>{{ProfileCtrl.user.name}}</span>
-            </div>
-            <div>
-              <span class="profile-info-labels">Email:</span>
-              <span>{{ProfileCtrl.user.email}}</span>
-            </div>
-            <div>
-              <span class="profile-info-labels">Blood Type:</span>
-              <span>{{ProfileCtrl.user.bloodtype}}</span>
-            </div>
-          </div>
-          <div>
-          </div>
-        </div>
+<div class="container profile">
+  <div class="col-md-8">
+    <div class="panel-body">
+      <div class="col-md-6">
+        <img ng-src="{{ProfileCtrl.user.photo}}" class="img-circle center-block img-profile"/>
       </div>
-      <div class="panel-body panel-lower">
-        <div class="profile-table">
+      <div class="col-md-6 userInfo-table">
+        <div ng-hide="ProfileCtrl.edit" class="table-user-information">
           <div>
-            <hr>
-            <img src="assests/heart.png" />
-            <span>You donated blood at <a href="https://www.youtube.com/watch?v=D-UmfqFjpl0">Sacred Heart Hospital</a>. Good job, you did it!</span>
+            <span class="profile-info-labels">Display Name:</span>
+            <p>{{ProfileCtrl.user.name}}</p>
           </div>
           <div>
-            <hr>
-            <img src="assests/buddy.png" />
-            <span>You and your BLOOD BUDDY went and donated blood together! What a true friend you are.</span>
+            <span class="profile-info-labels">Blood Type:</span>
+            <p>{{ProfileCtrl.user.bloodtype}}</p>
           </div>
           <div>
-            <hr>
-            <img src="assests/kraken.png" />
-            <span>Your potent virgin blood helped to summon C'thulhu, may his madness envelope the world. Thanks for your help!</span>
+            <span class="profile-info-labels">Joined on:</span>
+            <p>{{ProfileCtrl.user.createdAt | date}}</p>
           </div>
           <div>
-            <hr>
-            <img src="assests/pizza.png" />
-            <span>A piece of pizza was afraid of needles and didn't want to donate, but you convinced them by sharing your experiences! Wow-wee, all that rich pizza blood will come in handy.</span>
-          </div>
-          <div>
-            <hr>
-            <img src="assests/ghost.png">
-            <span>You donated blood to a man who was later found guilty of murder, and since you're a part of that man now, the spiteful spirit of his victim now haunts you. Bummer! Better luck next time!</span>
+            <span class="profile-info-labels">Number of Appointments:</span>
+            <p>{{ProfileCtrl.user.appointments.length}}</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-4 friend-col-outer center-block">
-      <div class="col-md-3 pull-left friends-col">
-        <div class="friends-table">
-          <div>
-            <span>Friends:</span>
-          </div>
-          <div>
-           <img src="assests/friend.png" /><a href=''>Mack</a>
-         </div>
-         <div>
-          <img src="assests/friend.png" /><a href=''>Steve</a>
-        </div>
-        <div>
-          <img src="assests/friend.png" /><a href=''>Bill</a>
-        </div>
-        <div>
-          <img src="assests/friend.png" /><a href=''>Mark</a>
-        </div>
+    <div class="panel-body panel-lower events">
+      <h3>Upcoming Events</h3>
+      <div class="event" ng-repeat="appointment in ProfileCtrl.user.appointments | filter:ProfileCtrl.upcoming">
+        <img src="assests/heart.png"/>
+        <p>
+          {{ProfileCtrl.user.name.split(" ")[0]}} has an appointment to donate blood at <a ng-href="hospital/profile/{{appointment.hospital.id}}">{{appointment.hospital.name}}</a>.
+        </p>
+        <p>
+          The appointment time is at {{appointment.time | date:'medium'}}. Way to go!
+        </p>
       </div>
-      <div class="hospitals-table">
-        <div>
-          <span>Favorite Hospitals:</span>
+    </div>
+    <div class="panel-body panel-lower events">
+      <h3>Event History</h3>
+      <div class="event history-event" ng-repeat="appointment in ProfileCtrl.user.appointments | filter:ProfileCtrl.past">
+        <div ng-show="{{appointment.type === 1}}">
+          <img src="assests/heart.png"/>
+          <p>
+            You donated blood at <a ng-href="/hospital/profile/{{appointment.hospital.id}}">{{appointment.hospital.name}}</a>. The clot thickens!
+          </p>
         </div>
-        <div>
-          <a href=''>Sacred Heart</a>
+        <div ng-show="{{appointment.type === 2}}">
+          <img src="assests/buddy.png"/>
+          <p>
+            You participated in an event <a ng-href="/hospital/profile/{{appointment.hospital.id}}">{{appointment.hospital.name}}</a>. Way to pool your efforts!
+          </p>
         </div>
-        <div>
-          <a href=''>Definitely Not a Front for Vampires</a>
+        <div ng-show="{{appointment.type === 3}}">
+          <img src="assests/medical.png" />
+          <p>
+            You drew blood from a stone and helped a blood-buddy get over his fear of needles!
+          </p>
         </div>
-        <div>
-          <a href=''>Uncle Choppy's Discount Surgery Hut</a>
+        <p class="time-tag"><time>{{appointment.time | date:'medium'}}</time></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 center-block">
+    <div class="connections">
+      <div class="friends">
+        <h4>Friends</h4>
+        <p class="friends-report" ng-show="{{ProfileCtrl.user.friends >= 0}}">{{ProfileCtrl.user.name.split(" ")[0]}} has no friends =(</p>
+        <div class="friend" ng-repeat="friend in ProfileCtrl.user.friends">
+          <img ng-src="{{friend.photo}}" /><a ng-href='/profile/{{friend.id}}'>{{friend.name}}</a>
         </div>
-        <div>
-          <a href=''>Steve's Hospital and Casino</a>
-        </div>
+        <div class="favorite-hospital">
+                <h4>Favorite Hospitals</h4>
+                <p ng-repeat="hospital in ProfileCtrl.hospitals">
+                  <a class="hospital" ng-href="/hospital/profile/{{hospital.model.id}} | limitTo:5" >{{hospital.model.name}}</a>
+                </p>
+              </div>
       </div>
     </div>
   </div>
 </div>
+

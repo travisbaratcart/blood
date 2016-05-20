@@ -1,68 +1,110 @@
-<div>
-  <h2>Blood Buddy</h2>
+<div class="container blood-buddy">
+  <div class="panel-body">
+    <div class="col-md-12 text-center">
+      <h2 class="blood-buddy-name"><a href="profile/{{BuddyCtrl.buddy.donor.id}}">{{BuddyCtrl.buddy.donor.name}}</a></h2>
+      <div ng-hide="BuddyCtrl.found"><h2>needs a blood buddy!</h2></div>
+      <div ng-show="BuddyCtrl.found"><h2>got a blood buddy!</h2></div>
+    </div>
+    <div class="col-md-12 text-center" ng-show="BuddyCtrl.visitorIsDonor">
+      <button class="btn-share" ng-click="BuddyCtrl.post()" >
+        Share this on facebook!
+      </button>
+      <p class="pull-left">As the potential donor, this is what people see when they come to be your buddy(Excluding this text and the above button). When you share this link and people come here, they'll see all this information which will allow them to make a good decision as to whether or not to join you.</p>
+    </div>
+    <row>
+      <div class="col-md-4 blood-buddy-left">
+        <img class="blood-buddy-photo center-block" src="{{BuddyCtrl.buddy.donor.photo}}" />
+      </div>
+      <div class="col-md-8">
+        <div class="blood-buddy-right">
+          <div class="blood-buddy-right-inner">
+            <div class="modal box4 fade" id="confirm-modal" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <p>Event on {{BuddyCtrl.buddy.time}}</p>
+                    <h4 class="modal-title">Share the link to find a buddy</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form">
 
-  <div class="modal box4 fade" id="confirm-modal" role="dialog">
-    <div class="modal-dialog">
+                      <h3> Share it on FB</h3>
+                      <div class="fb-share-button" id="myfb" ng-href={{$window.location.href}} data-layout="button_count" data-mobile-iframe="false" ></div>
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <p>Event on {{BuddyCtrl.buddy.time}}</p>
-          <h4 class="modal-title">Share the link to find a buddy</h4>
-        </div>
-        <div class="modal-body">
-          <form role="form">
-
-           <h3> Share it on FB</h3>
-           <div class="fb-share-button" id="myfb" ng-href={{$window.location.href}} data-layout="button_count" data-mobile-iframe="false" ></div>
-
-            <div class="checkbox input3">
-              <label><input type="checkbox" /> Post a message</label>
+                      <div class="checkbox input3">
+                        <label><input type="checkbox" /> Post a message</label>
+                      </div>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-default btn-confirm" data-dismiss="modal" ng-click="BuddyCtrl.buddytwoModal()">Find a buddy</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="BuddyCtrl.buddytwoModal()">Find a buddy</button>
-          </form>
+            <div>
+              <div ng-hide="BuddyCtrl.found">
+                <div>
+                  <div>
+                    <span class="blood-buddy-info-labels">Donor Name:</span>
+                    <p>{{BuddyCtrl.buddy.donor.name}}</p>
+                  </div>
+                  <div>
+                    <span class="blood-buddy-info-labels">Wants to go on this day:</span>
+                    <p>{{BuddyCtrl.buddy.time | date}}</p>
+                  </div>
+                  <div>
+                    <span class="blood-buddy-info-labels">At this time: </span>
+                    <p>{{BuddyCtrl.buddy.time | date: 'shortTime'}}</p>
+                    <div>
+                      <span class="blood-buddy-info-labels">At this facility:</span>
+                      <p>{{BuddyCtrl.buddy.hospital.name}} </p>
+                      <p>{{BuddyCtrl.buddy.hospital.address}}</p>
+                    </div>
+                  </div>
+                  <form ng-submit="BuddyCtrl.submit()">
+                    <h4>Join them as their blood buddy!<button type="submit" class="btn profile-button">Let's do this!</button></h4>
+                  </form>
+                </div>
+              </div>
+              <div class="blood-buddy-found" ng-show="BuddyCtrl.found">
+                <p>
+                  Hey! You've got a buddy! <a href="/profile/{{BuddyCtrl.buddy.bud.id}}">{{BuddyCtrl.buddy.bud.name}}</a> agreed to come along. You're all set to go to your appointment and meet them there. Here's the info again:
+                </p>
+                <div>
+                  <span class="blood-buddy-info-labels">Donor Name:</span>
+                  <p>{{BuddyCtrl.buddy.donor.name}}</p>
+                </div>
+                <div>
+                  <span class="blood-buddy-info-labels">Your appointment is on:</span>
+                  <p>{{BuddyCtrl.buddy.time | date}}</p>
+                </div>
+                <div>
+                  <span class="blood-buddy-info-labels">At this time: </span>
+                  <p>{{BuddyCtrl.buddy.time | date: 'shortTime'}}</p>
+                  <div>
+                    <span class="blood-buddy-info-labels">At this facility:</span>
+                    <p><a href="profile/{{BuddyCtrl.buddy.hospital.id}}">{{BuddyCtrl.buddy.hospital.name}}</a> </p>
+                    <p>{{BuddyCtrl.buddy.hospital.address}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- <button class="fb-share-button" id="myfb" ng-click="CalendarCtrl.postToFeed()" ng-href={{$window.location.href}} data-layout="button_count" data-mobile-iframe="false" width=10 height=50></button> -->
-  <div ng-hide="BuddyCtrl.found">
-    <button class="btn-share" ng-click="BuddyCtrl.post()" >
-     Share this link to find a buddy
-    </button>
-    <form ng-submit="BuddyCtrl.submit()">
-    <h3>Join {{BuddyCtrl.buddy.donor.name}} as his bloodbuddy<input type="submit"></h3>
-    <img class="invitelogo" src='assests/bbuddy.png'/>
-    </form>
-  </div>
-  <div ng-show="BuddyCtrl.found">
-  <h3> Found a buddyyy Yayyyy</h3>
-  <img class="thankyoulogo" src='assests/thankyou.png'/>
-  </div>
-
-<div class="col-md-6 userInfo-table">
-        <div style="color:black">
-         <!-- <img ng-src={{BuddyCtrl.buddy.donor.photo}} class="img-circle center-block img-profile"/> -->
-          <div>
-            <span class="profile-info-labels">Donor Name:</span>
-            <p>{{BuddyCtrl.buddy.donor.name}}</p>
+    </row>
+    <row>
+      <div class="col-md-12 blood-buddy-bottom">
+        <div class="blood-buddy-description">
+          <div ng-hide="BuddyCtrl.found">
+            <p> {{BuddyCtrl.buddy.donor.name.split(" ")[0]}} wants you to be their blood buddy! As their blood buddy you'll accompany them to their blood donation appointment to help them ease their anxiety surrounding needles or the blood donation process in general, or just to hang out. You do not necessarily have to donate blood yourself, although it's greatly recommended. All you have to do to be their blood buddy is review the time and date, address of the hospital and then click the join button and you're all set. Then you just show up and help someone get over their anxiety and let them save some lives!</p>
           </div>
-          <div>
-            <span class="profile-info-labels">Proposed time to schedule appointment:</span>
-            <p>{{BuddyCtrl.buddy.time}}</p>
-          </div>
-          <div>
-            <span class="profile-info-labels">Blood Type:</span>
-            <p>{{BuddyCtrl.buddy.donor.bloodtype}}</p>
-          </div>
-          <div>
-            <span class="profile-info-labels">Hospital Address:</span>
-            <p>{{BuddyCtrl.buddy.hospital.address}}</p>
+          <div ng-show="BuddyCtrl.found">
+            <p> {{BuddyCtrl.buddy.donor.name.split(" ")[0]}} found a blood buddy! They're all set! If you're interested in the future, as a blood buddy you'll accompany the donor to their appointment and help ease their anxiety surrounding needles, the blood donation process in general, or just to hang out. You don't have to donate blood yourself, but it's greatly recommended! All you have to do to be their blood buddy is review the time and date, address of the hospital and then click the join button and you're all set. Then you just have to show up and help someone get over their anxiety and let them save some lives.</p>
           </div>
         </div>
-</div>
-
+      </div>
+    </row>
+  </div>
 </div>

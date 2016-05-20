@@ -1,73 +1,68 @@
-<div class="container">
-  <div class="col-lg-10 col-lg-offset-1 toppad" >
-    <div class="col-md-8">
-      <div class="panel-body public-hospital-container">
-        <div class="col-md-3"> <img src="{{HospitalProfileCtrl.editObj.photo}}" alt="No Image Provided" onError="this.src = 'assests/hosp.jpg';" class="img-circle center-block img-profile"/>
+<div class="container hospital-profile">
+  <div class="col-md-8">
+    <div class="panel-body">
+      <div class="public-view" ng-hide="HospitalProfileCtrl.edit">
+        <div class="col-md-6">
+          <img src="{{HospitalProfileCtrl.hospital.photo}}" alt="No Image Provided" onError="this.src = 'assests/hosp.jpg';" class="img-circle center-block img-profile" />
           <div class="hospital-blood-panel">
             <nvd3 options="options" data="data" forceY='[50, 20]' api="api"></nvd3>
           </div>
         </div>
-        <div class="col-md-3 userInfo-table">
+        <div class="col-md-6 userInfo-table">
           <div class="table-user-information">
             <div>
               <span class="profile-info-labels">Hospital Name:</span> <br/>
-              <span>{{HospitalProfileCtrl.editObj.name}}</span>
+              <p>{{HospitalProfileCtrl.hospital.name}}</p>
             </div>
             <div>
               <span class="profile-info-labels">Email:</span> <br/>
-              <span>{{HospitalProfileCtrl.editObj.email}}</span>
+              <p>{{HospitalProfileCtrl.hospital.email}}</p>
             </div>
             <div>
               <span class="profile-info-labels">Address:</span>
-              <span>{{HospitalProfileCtrl.editObj.address}}</span>
+              <p>{{HospitalProfileCtrl.hospital.address}}</p>
             </div>
             <div>
               <span class="profile-info-labels">Website:</span><br/>
-              <span>{{HospitalProfileCtrl.editObj.hospitalurl}}</span>
+              <p>{{HospitalProfileCtrl.hospital.hospitalurl}}</p>
             </div>
             <div>
-              <span class="profile-info-labels">Phone Number:</span><br/> <span>{{HospitalProfileCtrl.editObj.phonenum}}</span>
+              <span class="profile-info-labels">Phone Number:</span>
+              <p>{{HospitalProfileCtrl.hospital.phonenum}}</p>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 panel-body panel-lower" style="width: 100%;">
-        <div class="profile-table">
-          <div>
-            <hr>
-            <img src="assests/heart.png" />
-            <span>You are hosting a blood drive at [SUBJECT HOMETOWN HERE] Park on October 31st, 2016. So far, [NUMBER] people have responded to say they will be attending.</span>
-          </div>
-          <hr>
-          <div>
-            <img src="assests/buddy.png" />
-            <span>You and your BLOOD BUDDY went and donated blood together! What a true friend you are.</span>
-          </div>
-          <hr>
-          <div>
-            <img src="assests/kraken.png" />
-            <span>Your potent virgin blood helped to summon C'thulhu, may his madness envelope the world. Thanks for your help!</span>
-          </div>
-          <hr>
-          <div>
-            <img src="assests/pizza.png" />
-            <span>A piece of pizza was afraid of needles and didn't want to donate, but you convinced them by sharing your experiences! Wow-wee, all that rich pizza blood will come in handy.</span>
-          </div>
-          <hr>
-          <div>
-            <img src="assests/ghost.png">
-            <span>You donated blood to a man who was later found guilty of murder, and since you're a part of that man now, the spiteful spirit of his victim now haunts you. Bummer! Better luck next time!</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-4 friend-col-outer center-block">
-      <div class="col-md-3 panel-body pull-left friends-col">Here's what people have to say about you:
-        <div class="review" ng-repeat="review in HospitalProfileCtrl.reviews">
-          <h4 class="profile-info-labels">{{review.donor.name}}</h4>
-          <p>{{review.content}}</p>
+    <div class="col-md-3 panel-body panel-lower">
+      <div class="events-hospital-profile">
+      <h2 class='text-center'>Upcoming Events</h2>
+        <div class="event" ng-repeat="event in HospitalProfileCtrl.hospital.events">
+        <img src="assests/heart.png"/>
+          <p> You are hosting <a ng-href="event/{{event.id}}">an event</a> on {{event.time | date}}, at {{event.time | date: 'shortTime'}}. </p>
+            <p>{{event.donors.length === 1 ? '1 donor is' : event.donors.length +' donors are'}} currently confirmed to attend.</p>
+          </p>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="col-md-4 friend-col-outer center-block">
+    <div class="panel-body reviews"><h3>Reviews for this hospital:</h3>
+    <div class="form-horizontal hospital-review-form">
+      <div class="form-group">
+        <div class="col-md-12">
+          <form>
+          <textarea class="form-control" ng-model="HospitalProfileCtrl.reviewContent" rows="3" placeholder="Submit a Review" required></textarea>
+          <button type="submit" class="review-button profile-button" ng-click="HospitalProfileCtrl.submitReview()">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+      <div class="review" ng-repeat="review in HospitalProfileCtrl.hospital.reviews.slice()">
+        <a href="profile/{{HospitalProfileCtrl.hospital.reviews.donor.id}}"><h4>{{review.donor.name}}:</h4></a>
+        <p>{{review.content}}</p>
+      </div>
+
     </div>
   </div>
 </div>

@@ -68,7 +68,6 @@ app.controller('ProfileController', ['$routeParams' , 'Profile', '$rootScope', '
     if (ProfileCtrl.hospitals.length) {
       ProfileCtrl.hospitals.sort((a, b) => a.numVisits - b.numVisits);
     }
-    console.log(ProfileCtrl.hospitals);
   };
 
   findFavoriteHospitals(ProfileCtrl.user);

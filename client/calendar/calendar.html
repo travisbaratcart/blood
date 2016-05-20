@@ -37,69 +37,71 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Schedule an Appointment</h4>
+          <h4 class="modal-title">Appointment Confirmation</h4>
         </div>
         <div class="modal-body">
-          <p>Schedule and set an appointment for {{CalendarCtrl.view.time.print}}?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="CalendarCtrl.firstModal()">Make appointment</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- blood buddy box 3 -->
-  <div class="modal box3 fade" id="confirm-modal" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Confirm your time to find a buddy</h4>
-        </div>
-        <div class="modal-body">
-          <p>Would you like to find a buddy and schedule an appointment for {{CalendarCtrl.view.time.print}}?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="CalendarCtrl.buddyoneModal()">Confirm</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- end of blood buddy box 3 -->
-
-  <div class="modal box2 fade" id="confirm-modal" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <p>Event on {{CalendarCtrl.view.time.print}}?</p>
-          <h4 class="modal-title">Select Options</h4>
-
-        </div>
-        <div class="modal-body">
-          <form role="form">
-            <div class="checkbox input1">
-              <label><input type="checkbox" /> Share on facebook</label>
-            </div>
-            <div class="checkbox input2">
-              <label><input type="checkbox" /> Create an Event</label>
-            </div>
+          <p>
+            Thank you for being awesome!! <br>
+            Is the follow date correct: <br>
+            {{CalendarCtrl.view.time.print}}?</p>
+          </div>
+          <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="CalendarCtrl.secondModal()">Make appointment</button>
-          </form>
+            <button type="button" class="btn btn-default btn-confirm" data-dismiss="modal" ng-click="CalendarCtrl.firstModal()">Make appointment</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
 
+    <!-- blood buddy box 3 -->
+    <div class="modal box3 fade" id="confirm-modal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Confirm your time to find a buddy</h4>
+          </div>
+          <div class="modal-body">
+            <p>Would you like to find a buddy and schedule an appointment for {{CalendarCtrl.view.time.print}}?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default btn-confirm" data-dismiss="modal" ng-click="CalendarCtrl.buddyoneModal()">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- end of blood buddy box 3 -->
+
+    <div class="modal box2 fade" id="confirm-modal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <p>Would you like to make this an event?</p>
+            <h4 class="modal-title">Select Options</h4>
+
+          </div>
+          <div class="modal-body">
+            <form role="form">
+              <div class="checkbox input1">
+                <label><input type="checkbox" /> Share on facebook</label>
+              </div>
+              <div class="checkbox input2">
+                <label><input type="checkbox" /> Make this an event</label>
+              </div>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-default btn-confirm" data-dismiss="modal" ng-click="CalendarCtrl.secondModal()">Make appointment</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
 </div>

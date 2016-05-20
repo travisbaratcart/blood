@@ -40,11 +40,11 @@
             <p>Edit Information:</p>
             <p>
               Hospital name
-              <input type="text" ng-model="HospitalProfileCtrl.hospital.name" />
+              <input type="text" ng-model="HospitalProfileCtrl.hospital.name" ng-model-options="{ updateOn: 'submit'}" />
             </p>
             <p>
               Hospital email
-              <input type="email" ng-model="HospitalProfileCtrl.hospital.email" required/>
+              <input type="email" ng-model="HospitalProfileCtrl.hospital.email" ng-model-options="{ updateOn: 'submit'}" required/>
             </p>
             <p>
               Location
@@ -52,11 +52,11 @@
             </p>
             <p>
               Phone Number
-              <input type="text"  ng-model="HospitalProfileCtrl.hospital.phonenum" />
+              <input type="text"  ng-model="HospitalProfileCtrl.hospital.phonenum" ng-model-options="{ updateOn: 'submit'}"/>
             </p>
             <p>
               Website
-              <input type="text"  ng-model="HospitalProfileCtrl.hospital.hospitalurl" />
+              <input type="text"  ng-model="HospitalProfileCtrl.hospital.hospitalurl" ng-model-options="{ updateOn: 'submit'}" />
             </p>
           </div>
           <div class="col-md-6">
@@ -71,7 +71,7 @@
             </p>
           </div>
           <button ng-click="HospitalProfileCtrl.Edit()" class="profile-button btn">Submit</button>
-          <button ng-click="HospitalProfileCtrl.Edit()" class="profile-button btn">Cancel Edit</button>
+          <button type="button" ng-click="HospitalProfileCtrl.Edit()" class="profile-button btn">Cancel Edit</button>
         </form>
       </div>
     </div>
@@ -88,7 +88,7 @@
   </div>
   <div class="col-md-4 friend-col-outer center-block">
     <div class="panel-body reviews"><h3>Reviews of your hospital:</h3>
-      <div class="review" ng-repeat="review in HospitalProfileCtrl.hospital.reviews.slice().reverse()">
+      <div class="review" ng-repeat="review in HospitalProfileCtrl.hospital.reviews.slice()">
         <a href="profile/{{HospitalProfileCtrl.hospital.reviews.donor.id}}"><h4>{{review.donor.name}}:</h4></a>
         <p>{{review.content}}</p>
       </div>

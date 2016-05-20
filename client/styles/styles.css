@@ -4,6 +4,10 @@ h1, h2, h3, h4, h5, p, div {
   line-height: 1.5;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 .col-lg-4 {
   /*float: none;*/
 }
@@ -236,14 +240,13 @@ header {
 }
 
 #iw_container{
-  border-color: #4cae4c;
-  width: 200px;
+  width: 310px;
 
 }
 
 #iw_container .iw_title {
  font-family: 'Open Sans Condensed', sans-serif;
- font-size: 12px;
+ font-size: 1.3em;
  font-weight: 200;
  text-align: center;
  padding: 4px;
@@ -259,8 +262,8 @@ header {
   text-align: center;
 }
 
-.iw_title, .iw_content{
-  width:240;
+.iw_title {
+  width: 310px;
 }
 /*
 #iw_container .iw_content{
@@ -268,23 +271,31 @@ header {
  }*/
 
  #iw_container .btn-default {
-  color: #fff;
-  background-color:#595959;
-  border-color: #700000;
+  color: white;
+  background-color:#700000;
+  border-color: #eee;
   font-size: 10px;
-  text-align: left;
   width: 100px;
   height:30px;
-  float: right;
   right: 115px;
+  margin-top: 3px;
+}
 
+#iw_container .btn-default a {
+  color: white;
+  margin-left: -9px;
+  font-size: 1.1em;
 }
 
 .iw_content{
-  font-size: 10px;
-  float:right;
+  width: 180px;
+  font-size: 1.1em;
   font-family: 'Open Sans Condensed', sans-serif;
-  text-align: right;
+  text-align: left;
+}
+
+.iw_content a {
+  color: #65B6FB;
 }
 
 #iw_container {
@@ -292,20 +303,32 @@ header {
   font-size: 11px;
 }
 
+.gmnoprint {
+  display: none;
+}
 
+.gm-style-cc {
+  display: none;
+}
 .gm-style-iw {
  position: relative;
  top: 0px ;
- font-size: 8px;
- background-color: #fff7e6;
+ font-size: 1.1em;
+ background-color: #333333;
  border: 1px solid rgba(72, 181, 233, 0.6);
  border-radius: 15px;
  border: 2px solid #700000;
- width: 200px  !important;
+ width: 310px  !important;
  overflow: hidden !important;
+ font-family: 'Open Sans Condensed', sans-serif;
+
+ color: white;
  line-height: 1.35;
 }
 
+.donor-chart-header {
+  color: white;
+}
 
 .profile .events {
   margin-top: 20px;
@@ -318,7 +341,12 @@ header {
 
 .map-page .donor-chart {
   margin-top: 20px;
-  border: 1px solid #700000;
+  background-color: #333333;
+  border: 2px solid #700000;
+}
+
+.donor-chart .nvd3-svg {
+  fill: white;
 }
 
 .event {
@@ -345,8 +373,9 @@ header {
 #street{
   border:1px solid #700000 ;
   float:left;
-  width: 50%;
-  height: 100%;
+  width: 120px;
+  height: 120px;
+  margin-top: 5px;
 }
 
 /* ----------------------------- */
@@ -384,9 +413,15 @@ header {
 
 
 .iwf{
-  border:1px solid #700000 ;
-  width:50%;
+  width:180px;
   float:right;
+  text-align: center;
+  margin-top: 3px;
+}
+
+.iwf >button {
+  text-align: center;
+  float: none;
 }
 
 #street img, #street a {
@@ -418,6 +453,11 @@ header {
 
 .profile-table {
   color: white;
+}
+
+.friends-report {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .profile label {
@@ -634,6 +674,14 @@ rzslider .rz-pointer, rzslider .rz-bar.rz-selection {
   cursor: pointer;
 }
 
+.splash header {
+  min-height: 100vh;
+}
+
+.splash .service-box {
+  margin: 20px 0;
+}
+
 .splash-signup {
   border: 2px solid #700000;
   height: 60px;
@@ -661,12 +709,15 @@ rzslider .rz-pointer, rzslider .rz-bar.rz-selection {
   margin: 0 auto;
 }
 
-
+.splash-btn-bottom {
+  margin-top: 40px;
+  padding: 1.5em 2em;
+}
 
 @media only screen and (max-width: 1000px) {
  .visualizer {
   /*width: 30%;*/
-  margin: 10px auto;
+  margin: 50px auto;
 }
 .first-viz {
   margin-bottom: 40px;
@@ -687,16 +738,8 @@ rzslider .rz-pointer, rzslider .rz-bar.rz-selection {
   .visualizer {
     width: 80%;
     max-width: 300px;
+    margin: 50px auto;
   }
-}
-.splash-btn-bottom {
-  margin-top: 50px;
-  height: 50px;
-}
-
-.splash-btn-bottom p {
-  margin-top: 6px;
-  font-size: 1.2em;
 }
 
 .nv-legend-symbol {
@@ -756,7 +799,7 @@ rzslider .rz-pointer, rzslider .rz-bar.rz-selection {
   color:white;
 }
 
-.events-panel p {
+.events-panel  {
   margin: 5px;
   font-family: 'Open Sans';
 }
@@ -836,6 +879,15 @@ rzslider .rz-pointer, rzslider .rz-bar.rz-selection {
   border-bottom: 1px solid white;
 }
 
+.donor-chart {
+  padding: 15px;
+}
+
+.donor-chart h3 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 /* ----------------------------- */
 
 
@@ -858,7 +910,7 @@ rzslider .rz-pointer, rzslider .rz-bar.rz-selection {
 }
 
 .navbar {
-  margin: -1px -1px -1px 2px;
+  margin: -1px -1px -1px 0px;
   background-color: #700000;
   border: none;
   z-index: 99;
@@ -897,9 +949,12 @@ rzslider .rz-pointer, rzslider .rz-bar.rz-selection {
   background-color: #700000;
 }
 
-@media only screen and (max-width: 780px) {
+.navbar-collapse {
+  float: right;
+}
+
+@media only screen and (max-width: 767px) {
  .navbar {
-  width: 100vw;
   position: relative;
   z-index: 99;
   text-align: center;
@@ -907,6 +962,9 @@ rzslider .rz-pointer, rzslider .rz-bar.rz-selection {
 .nav li a {
   padding: 25px 25px;
   font-size: 1.5em;
+}
+.navbar-collapse {
+  float: none;
 }
 }
 
@@ -972,6 +1030,10 @@ rzslider .rz-pointer, rzslider .rz-bar.rz-selection {
   color: black;
 }
 
+.btn-confirm {
+  background-color: #700000;
+}
+
 @media only screen and (max-width: 780px) {
   #calendar > .panel-body {
     text-align: center;
@@ -985,13 +1047,86 @@ rzslider .rz-pointer, rzslider .rz-bar.rz-selection {
 
 }
 
+/* ----------------------------- */
+
+/* Blood Buddy page styling */
+
+.blood-buddy {
+  color: white;
+}
+
+.blood-buddy-left {
+  margin-top: 15px;
+}
+
+.blood-buddy-bottom {
+  margin-top: 15px;
+}
+
+.blood-buddy-found {
+  margin: 15px;
+}
+.blood-buddy-right {
+  margin: 15px;
+  border: 2px solid #700000;
+  text-align: right;
+}
+
+.blood-buddy-right-inner {
+  text-align: center;
+}
+
+.blood-buddy-right-inner h4 {
+  margin: 15px;
+}
+
+.blood-buddy-right button {
+  margin: 5px;
+}
+.blood-buddy-description {
+  font-size: 1.1em;
+  border: 2px solid #700000;
+  padding: 20px;
+}
+
+.blood-buddy-photo {
+  width: 100%;
+  height: 100%;
+  max-width: 285px;
+  max-height: 285px;
+  border: 2px solid #700000;
+}
+
+.blood-buddy-name {
+  color: #5692e1;
+  display: inline;
+}
+
+.blood-buddy-info-labels {
+  color: #6e99e1;
+}
+
+.btn-share {
+  margin: 15px 0;
+}
+
+@media only screen and (max-width: 991px) {
+  .blood-buddy-photo {
+    max-height:250px;
+    max-width: 250px;
+  }
+}
+
+/* ----------------------------- */
+
+
 /* Get stuff off the navbars back already, jeez. */
 
 #donor-login, #donor-signup, #hospital-login, #hospital-signup {
   padding-top: 100px;
 }
 
-.hospital-profile, .profile, .map-page, .calendar, .stocks {
+.hospital-profile, .profile, .map-page, .calendar, .stocks, .blood-buddy {
   padding-top: 70px;
 }
 

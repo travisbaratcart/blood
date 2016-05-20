@@ -16,5 +16,6 @@ app.controller('FeedController', ['$scope', '$rootScope','Feed', function($scope
   FeedCtrl.submit = () => {
     Feed.submit(FeedCtrl.content, {latitude: $rootScope.latitude, longitude: $rootScope.longitude});
     updatePosts();
+    FeedCtrl.content = '';
   };
 }]);

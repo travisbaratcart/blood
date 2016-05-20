@@ -239,8 +239,10 @@ app.controller('BloodMapController', ['$window','$routeParams' , '$rootScope', '
       //Assign the top 5 donors donotion count to the $scope.data[0].values[i].value
       if(donors.length > 0) {
         for(let i=0; i< donors.length; i++){
-          $scope.donordata[0].values[i].value = donors[i].appointments.length;
-          $scope.donordata[0].values[i].label = donors[i].name;
+          if(donors[i].appointments.length > 0) {
+            $scope.donordata[0].values[i].value = donors[i].appointments.length;
+            $scope.donordata[0].values[i].label = donors[i].name;
+          }
         }
         update();
       }
@@ -272,8 +274,8 @@ app.controller('BloodMapController', ['$window','$routeParams' , '$rootScope', '
       let siteLatLng = new google.maps.LatLng(site.latitude, site.longitude);
 
       let infowindow = new google.maps.InfoWindow({
-        content: "Hospital near you",
-        maxWidth:200
+        content: "Hospitals near you",
+        maxWidth: 310
       });
 
       let marker = new google.maps.Marker({
@@ -288,14 +290,14 @@ app.controller('BloodMapController', ['$window','$routeParams' , '$rootScope', '
       let streetimg = null;
       //Content in the infowindow
       let iwContent = '<div id="iw_container">' +
-      '<div class="iw_title">' + site.name + '</div>' +
-      '<div class="iwf"><div class="iw_content">' + site.address + '</div>' +
-      '<div class="iw_content">' +site.hospitalurl+ '</div>' +
-      '<div class="iw_content">' + "Call: "+site.phonenum+ '</div>' +
-      '<div class="iw_content">' + "Open: "+site.openhours + '</div>' +
-      '<div class="iw_content">' + '<button type="button" class="btn btn-default">' + `<a href="/calendar/${site.id}">`+
-      'Make Appointment</a>' +'</button></div></div>' +
-      '<div id="street"  style="width:100px;height:100px">' + '</div></div>';
+      `<div class="iw_title"> ${site.name}</div>` +
+      `<div class="iwf"><div class="iw_content"> ${site.address}</div>` +
+      `<div class="iw_content"> <a href="${site.hospitalurl}"> ${site.hospitalurl} </a></div>` +
+      `<div class="iw_content"> Call: ${site.phonenum} </div>` +
+      `<div class="iw_content"> Profile: <a href="/hospital/profile/${site.id}">Click Here</a></div>` +
+      `<div class="iw_content"> <button type="button" class="btn btn-default"> <a href="/calendar/${site.id}">
+      Make Appointment</a></button></div></div>` +
+      `<div id="street"  style="width:120px;height:120px"></div></div>`;
 
       //Remove div around the InfoWindow
       google.maps.event.addListener(infowindow, 'domready', function() {

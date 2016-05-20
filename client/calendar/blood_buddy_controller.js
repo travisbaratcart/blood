@@ -1,19 +1,21 @@
-app.controller('BuddyController', ['$window' , '$scope','$routeParams', '$rootScope','Buddy','Calendar','Feed', function($window,  $scope,$routeParams, $rootScope, Buddy, Calendar, Feed) {
+app.controller('BuddyController', ['$window' , '$scope','$routeParams', '$rootScope','$filter','Buddy','Feed', function($window,  $scope,$routeParams, $rootScope, $filter, Buddy, Feed) {
   let BuddyCtrl = this;
   BuddyCtrl.buddy = {
     name: 'Blood Buddy'
   };
-BuddyCtrl.post =() => {
-  let $box4 = $('.modal.box4');
-   $box4.modal();
-};
+  BuddyCtrl.visitorIsDonor = false;
+  BuddyCtrl.post =() => {
+    let $box4 = $('.modal.box4');
+     $box4.modal();
+  };
 
   BuddyCtrl.buddytwoModal = () => {
       //share on fb
+      let formatTime = $filter('date')(BuddyCtrl.buddy.time,' MM/dd @ HH:mm');
       let $input3 = $('.checkbox.input3').find('input');
       if ($input3.is(':checked')) {
-         let content = "Looking for a buddy on" + " " + BuddyCtrl.buddy.time +" " + "https://bloodshare.io/bloodbuddy/"+ BuddyCtrl.buddy.id ;
-         Feed.submit(content, {latitude: BuddyCtrl.buddy.hospital.latitude, longitude: BuddyCtrl.buddy.hospital.longitude});
+        let content = `Looking for a buddy on ${formatTime}  https://bloodshare.io/bloodbuddy/${BuddyCtrl.buddy.id}` ;
+        Feed.submit(content, {latitude: BuddyCtrl.buddy.hospital.latitude, longitude: BuddyCtrl.buddy.hospital.longitude});
       };
     };
 
@@ -31,6 +33,9 @@ BuddyCtrl.post =() => {
     Buddy.get($routeParams.buddyId)
     .then(buddy => {
       BuddyCtrl.buddy = buddy;
+      if (parseInt(BuddyCtrl.buddy.donor.id) === parseInt($window.localStorage.getItem('id'))) {
+        BuddyCtrl.visitorIsDonor = true;
+      }
       if(buddy.budId !== null){
         BuddyCtrl.found= true;
       } else {

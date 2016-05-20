@@ -1,5 +1,5 @@
 (() => {
-  app.controller('CalendarController', ['$scope','$rootScope', '$controller', '$http', '$window', '$routeParams', 'Calendar', 'Event', 'Feed', 'Buddy', 'HospitalProfile', 'Appointment', function($scope, $rootScope, $controller, $http, $window, $routeParams, Calendar, Event,Feed,Buddy, HospitalProfile, Appointment) {
+  app.controller('CalendarController', ['$scope','$rootScope', '$controller', '$http', '$window', '$routeParams','$location', 'Calendar', 'Event', 'Feed', 'Buddy', 'HospitalProfile', 'Appointment', function($scope, $rootScope, $controller, $http, $window, $routeParams, $location, Calendar, Event,Feed,Buddy, HospitalProfile, Appointment) {
     let CalendarCtrl = this;
     let hospitalId = $routeParams.hospitalid;
     let $calendar = $('#calendar');
@@ -134,10 +134,7 @@
     let pushToGoogle = (data) => {
       Calendar.postToGoogle(data).then(res => {
         $calendar.fullCalendar('removeEvents');
-        $calendar.fullCalendar('addEventSource', [{
-          title: data.summary,
-          start: data.start.dateTime
-        }]);
+        $calendar.fullCalendar('refetchEvents');
       }).catch(err => {
         console.error('unable to sync to google', err);
         $calendar.fullCalendar('removeEvents');
@@ -172,17 +169,19 @@
         time: CalendarCtrl.view.time.start,
         type: type
       }).then(res => {
-        pushToGoogle({
-          summary: 'Your appointment',
-          start: {
-            dateTime: CalendarCtrl.view.time.start,
-            timeZone: 'UTC'
-          },
-          end: {
-            dateTime: CalendarCtrl.view.time.start,
-            timeZone: 'UTC'
-          }
-        });
+        HospitalProfile.get(hospitalId).then(hospital => {
+          pushToGoogle({
+            summary: `Appointment with \n${hospital.name}`,
+            start: {
+              dateTime: CalendarCtrl.view.time.start,
+              timeZone: 'UTC'
+            },
+            end: {
+              dateTime: CalendarCtrl.view.time.start,
+              timeZone: 'UTC'
+            }
+          });
+        })
       })
       .catch(err => {
         console.error('error in making appointment! ', err);
@@ -190,15 +189,22 @@
     }
 
     let setView = (calEvent) => {
+      let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
       let month = calEvent.start.month() + 1;
       let date = calEvent.start.date();
       let hour = calEvent.start.hour();
+      let day = calEvent.start.day();
       let minute = calEvent.start.minutes();
+      let amPm = hour >= 12 ? 'pm' : 'am';
+
+      hour = hour > 12 ? hour - 12 : hour;
       minute = minute < 10 ? minute + '0' : minute;
+
 
       CalendarCtrl.view.time.start = calEvent.start;
       CalendarCtrl.view.time.end = calEvent.end;
-      CalendarCtrl.view.time.print = `${month}/${date} @ ${hour}:${minute}`;
+      CalendarCtrl.view.time.print = `${days[day]}, ${month}/${date} at ${hour}:${minute} ${amPm}`;
     };
 
 
@@ -209,6 +215,7 @@
         hospitalId ? donorView(callback) : hospitalView(callback);
       },
       eventClick: (calEvent, jsEvent, view) => {
+        console.log(calEvent);
         if (CalendarCtrl.isHospital) {
           if (calEvent.data.donorId) {
             $window.location.assign(`/profile/${calEvent.data.donorId}`);
@@ -225,12 +232,12 @@
           setView(calEvent);
           $scope.$apply();
          //blood buddy
-          if(CalendarCtrl.buddy){
-            $box3.modal();
-          } else {
-            $box1.modal();
-          }
+         if(CalendarCtrl.buddy){
+          $box3.modal();
+        } else {
+          $box1.modal();
         }
+      }
         // same here
         if (calEvent.title === 'Your appointment') {
           $window.location.assign(`/hospital/profile/${hospitalId}`);
@@ -274,7 +281,7 @@
           $calendar.fullCalendar('refetchEvents');
         }).catch(err => {
           console.error('error in createEvent', err);
-        })
+        });
       }
     };
 
@@ -289,27 +296,30 @@
 
 //blood buddy
 
-    CalendarCtrl.buddyoneModal = () => {
+CalendarCtrl.buddyoneModal = () => {
 
-      let $box4 = $('.modal.box4');
-      let $inputs = $('.modal').find('input');
-      Buddy.requestBuddy(CalendarCtrl.view.time.start, $routeParams.hospitalid)
-      .then(buddy => {
-        let content = "Looking for a buddy on" + " " + CalendarCtrl.view.time.print +" " + "https://bloodshare.io/bloodbuddy/"+buddy.id ;
-        Feed.submit(content, {latitude: $rootScope.latitude, longitude: $rootScope.longitude});
-         $window.location.assign(`#bloodbuddy/${buddy.id}`);
-      });
+  let $box4 = $('.modal.box4');
+  let $inputs = $('.modal').find('input');
+  Buddy.requestBuddy(CalendarCtrl.view.time.start, $routeParams.hospitalid)
+  .then(buddy => {
+    let content = `Looking for a buddy on ${CalendarCtrl.view.time.print}  https://bloodshare.io/bloodbuddy/${buddy.id}` ;
+    Feed.submit(content, {latitude: $rootScope.latitude, longitude: $rootScope.longitude});
+    $('.modal').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+    $location.path(`/bloodbuddy/${buddy.id}`);
+  });
 
-    };
-
-
-    CalendarCtrl.secondModal = () => {
-      let $input1 = $('.checkbox.input1').find('input');
-      let $input2 = $('.checkbox.input2').find('input');
-      CalendarCtrl.eventsChecked = true;
-      processInput($input1, $input2);
-    };
+};
 
 
-  }]);
+CalendarCtrl.secondModal = () => {
+  let $input1 = $('.checkbox.input1').find('input');
+  let $input2 = $('.checkbox.input2').find('input');
+  CalendarCtrl.eventsChecked = true;
+  processInput($input1, $input2);
+};
+
+
+}]);
 })();

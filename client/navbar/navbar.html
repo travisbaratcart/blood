@@ -9,10 +9,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">BloodShare!</a>
+      <a class="navbar-brand" href="/splash">BloodShare!</a>
     </div>
 
-    <div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li>
       <a href="/bloodmap"><span class="glyphicon glyphicon-tint menu-tint"></span>Blood Map</a>
@@ -29,6 +29,9 @@
     <li>
       <a ng-hide="NavCtrl.isDonor || NavCtrl.isHospital" href="/donor/login"><span class="glyphicon glyphicon-log-in"></span>Log In</a>
       <a ng-show="NavCtrl.isDonor || NavCtrl.isHospital" ng-click="NavCtrl.logout()" href=""><span class="glyphicon glyphicon-remove"></span>Logout</a>
+    </li>
+    <li>
+      <a ng-hide="NavCtrl.isDonor || NavCtrl.isHospital" href="/donor/signup"><span class="glyphicon glyphicon-ok"></span>Sign Up!</a>
     </li>
       </ul>
     </div>

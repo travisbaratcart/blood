@@ -116,7 +116,7 @@ app.controller('StockController', ['$routeParams', '$http', "$scope", function($
 
   StockCtrl.setTypeLevel = (type) => {
 
-    for( i = 0; i < $scope.data[0].values.length; i++) {
+    for(let i = 0; i < $scope.data[0].values.length; i++) {
       if ($scope.data[0].values[i].label === StockCtrl.currentSelectedType ) {
         $scope.data[0].values[i].value = parseInt(StockCtrl.setLevel);
       }

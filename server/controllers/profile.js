@@ -18,7 +18,7 @@ let getCurrentDonor = (req, res) => {
       include: [{
         model: Hospital,
         attributes: {
-          exclude: ['email']
+          exclude: ['password']
         }
       }]
     }, {
@@ -33,7 +33,7 @@ let getCurrentDonor = (req, res) => {
       include: [{
         model: Hospital,
         attributes: {
-          exclude: ['email']
+          exclude: ['password']
         }
       }]
     }]})
@@ -55,7 +55,7 @@ let updateCurrentDonor = (req, res) => {
       include: [{
         model: Hospital,
         attributes: {
-          exclude: ['email']
+          exclude: ['password']
         }
       }]
     }, {
@@ -70,7 +70,7 @@ let updateCurrentDonor = (req, res) => {
       include: [{
         model: Hospital,
         attributes: {
-          exclude: ['email']
+          exclude: ['password']
         }
       }]
     }]
@@ -88,8 +88,24 @@ let getDonorById = (req, res) => {
     },
     attributes: {
       exclude: ['email', 'password', 'address', 'longitude', 'latitude']
-    }
-  })
+    },
+    include: [{
+      model: Appointment,
+      include: [{
+        model: Hospital,
+        attributes: {
+          exclude: ['password']
+        }
+      }]
+    }, {
+        model: Donor,
+        as: 'friends',
+        through: 'friends',
+        attributes: {
+          exclude: ['email', 'password', 'address', 'latitude', 'longitude']
+        }
+      }]
+    })
   .then(user => {
     res.send(user);
   });
